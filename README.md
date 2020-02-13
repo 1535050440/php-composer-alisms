@@ -25,7 +25,7 @@ English | [简体中文](/README-zh-CN.md)
 
 
 Alibaba Cloud Client for PHP is a client tool that helps PHP developers manage credentials and send requests, [Alibaba Cloud SDK for PHP][SDK] dependency on this tool.
-# ThinkPhp5.1
+#  一：【ThinkPhp5.1版本】
 ## 1.   application/common.php文件
 ````php
 /**
@@ -65,7 +65,78 @@ return [
 ];
 ````
 
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+
+
+# 二：【Laravel6】
+
+````text
+路径： config/sms.php
+
+// +----------------------------------------------------------------------
+// | 短信设置
+//  Config::get('sms.accessKeyId')
+// +----------------------------------------------------------------------
+return [
+    'accessKeyId' => 'LdTAIepXM665VaFvt',
+    'accessSecret' => 'WdHqEyofsgxTmFCMHT26hmqDRrqQQEn',
+    'signName' => '柠檬xx',
+    'templateCode' => [
+        'other' => 'SMS_1637252967',
+        'login' => 'SMS_1637252967',
+        'register' => 'SMS_1637252967',
+    ]
+];
+
+````
+
+````text
+namespace App\Common\Services;
+
+    /**
+     * 发送阿里云短信
+     *
+     * @param $mobile
+     * @param $code
+     * @param $type
+     * @return array
+     * @throws ClientException
+     * @author:  deng    (2020/2/13 20:08)
+     */
+    public function smsSend($mobile, $code, $type = '')
+    {
+        switch ($type) {
+            case 'LOGIN':
+                $templateCode = Config::get('sms.templateCode')['login'];
+                break;
+            case 'REGISTER':
+                $templateCode = Config::get('sms.templateCode')['register'];
+                break;
+            default:
+                $templateCode = Config::get('sms.templateCode')['other'];
+                break;
+        }
+        $condition = [
+            'accessKeyId' => Config::get('sms.accessKeyId'),
+            'accessSecret' => Config::get('sms.accessSecret'),
+            'signName' => Config::get('sms.signName'),
+            'templateCode' => $templateCode,
+            'mobile' => $mobile,
+            'code' => $code,
+        ];
+
+        $sendSms = AliSms::sendSms($condition);
+
+        return $sendSms;
+    }
+
+
+````
+
+
 ## -----------------------------------------
+## -----------------------------------------
+
 
 ## Online Demo
 [API Explorer](https://api.aliyun.com) provides the ability to call the cloud product OpenAPI online, and dynamically generate SDK Example code and quick retrieval interface, which can significantly reduce the difficulty of using the cloud API.
