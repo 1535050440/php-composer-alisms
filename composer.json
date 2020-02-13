@@ -1,0 +1,24 @@
+{
+    "name": "deng-php/alisms",
+    "description": "alisms-sendSms1.5.12",
+    "keywords": ["deng", "alisms", "sms", "php"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "deng",
+            "email": "1415551519@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "DengPhp\\": "src"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5",
+        "alibabacloud/client": "^1.5.12"
+    }
+    
+}
